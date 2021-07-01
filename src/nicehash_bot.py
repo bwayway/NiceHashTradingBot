@@ -166,6 +166,8 @@ def exchange_crypto(token_to_exchange_dictionary, driver):
         show_more_button = driver.find_element_by_class_name('btn.primary.normal.outline')
         show_more_button.click()
 
+        time.sleep(10)
+        
         token_market_page = driver.find_element_by_xpath(f'//a[@href="/my/tradeview/{token}BTC"]')
 
         time.sleep(3)
@@ -356,7 +358,7 @@ def start_process(config_data,driver):
     wallet_btn = driver.find_element_by_xpath('//a[@href="/my/wallets/"]')
     wallet_btn.click()
 
-    time.sleep(3)
+    time.sleep(10)
 
     #switch to USD 
     usd_btn = driver.find_element_by_class_name('cswitcher.unselected')
