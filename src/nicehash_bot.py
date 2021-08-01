@@ -361,19 +361,21 @@ def start_process(config_data,driver):
     time.sleep(10)
 
     #switch to USD 
-    usd_btn = driver.find_element_by_class_name('cswitcher.unselected')
+    usd_btn = driver.find_element_by_class_name('fa.fa-sort')
     usd_btn.click()
 
     total_balance = driver.find_element_by_class_name('pt8.pb16.balance.pointer').text
 
 
     write_to_log_and_email('-------------------Wallets-------------------',1 )
-    wallets = driver.find_elements_by_class_name('cbalance')
-    for wallet in wallets:
-        wallet_amount_and_name = wallet.text.split()
-        wallet_amount_usd = wallet.find_element_by_xpath('..').find_element_by_class_name('cfiat').text
-        
-        write_to_log_and_email(f'{wallet_amount_and_name[1]}: {wallet_amount_and_name[0]} ({wallet_amount_usd})',1 )
+    wallets = driver.find_elements_by_css_selector('div.wallets')
+    yourWallets = wallets[0].find_elements_by_class_name('wallet-row.pointer')
+    for wallet in yourWallets:
+        wallet_amount_name = wallet.find_element_by_class_name("currency").text
+        wallet_amount_coin = wallet.find_element_by_class_name("col-available").text
+        wallet_amount_usd = wallet.find_element_by_class_name('col-total').find_element_by_class_name('mt4.fs12.text-muted.fiat').text
+            
+        write_to_log_and_email(f'{wallet_amount_name}: {wallet_amount_coin} ({wallet_amount_usd})',1 )
     write_to_log_and_email(f'Total wallet: {total_balance}',1 )
     write_to_log_and_email('-------------------------------------------------', 1)
 
